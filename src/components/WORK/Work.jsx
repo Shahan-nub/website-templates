@@ -1,8 +1,8 @@
-import WorkTemplate from "./WorkTemplate";
 import WorkTitle from "./WorkTitle";
 import Glow from "../ui/Glow";
 import supabase from "@/lib/supabase";
 import { getUnsplashTemplates } from "@/lib/unsplash";
+import WorkGrid from "./WorkGrid";
 
 async function getTemplates() {
   const { data } = await supabase
@@ -15,27 +15,14 @@ async function getTemplates() {
 
 export default async function Work() {
   const dbTemplates = await getTemplates();
-  const unsplashTemplates = await getUnsplashTemplates();
+  const initialUnsplashTemplates = await getUnsplashTemplates(1, 8);
 
-  const allTemplates = [...dbTemplates, ...unsplashTemplates];
+  const initialTemplates = [...dbTemplates, ...initialUnsplashTemplates];
 
   return (
     <div className="my-20 flex flex-col w-full" id="work">
       <WorkTitle />
-
-      <div className="w-full relative flex flex-wrap gap-8 justify-center px-6 md:px-16">
-        <Glow pos="left-1/2 -translate-x-[50%]" />
-        <Glow pos="left-1/2 -translate-x-[50%] bottom-8" />
-
-        {allTemplates.map((t) => (
-          <WorkTemplate
-            key={t.id}
-            id={t.title}
-            src={t.image_url}
-            link={t.demo_url}
-          />
-        ))}
-      </div>
+      <WorkGrid initialTemplates={initialTemplates} />
     </div>
   );
 }
