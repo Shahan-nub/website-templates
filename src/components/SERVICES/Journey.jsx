@@ -1,11 +1,13 @@
 "use client"
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import Heading from "../ui/Heading";
 import Button from "../ui/Button";
 import {motion} from "framer-motion";
 
 
 export default function Journey() {
+  const router = useRouter();
   return (
     <div className="flex w-full my-10  px-5 lg:px-8 justify-between">
 
@@ -45,7 +47,12 @@ export default function Journey() {
           <li>Train the algorithms.</li>
         </ul>
         <div className="w-max">
-          <Button text="Get started"></Button>
+          <button
+            onClick={() => router.push("/services/ai-design-generator")}
+            className="px-8 py-3 bg-color-1 text-white rounded-lg font-semibold hover:bg-opacity-90 transition-all"
+          >
+            Get started
+          </button>
         </div>
       </motion.div>
     </div>
